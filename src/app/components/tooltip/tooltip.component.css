@@ -2,17 +2,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 16px;
+  padding: 16px;
 }
 
 a {
   text-decoration: none;
   color: black;
+  cursor: pointer;
 }
 
 .logo {
   width: 60px;
   height: 60px;
+  cursor: pointer;
 }
 
 .button-login {
@@ -21,8 +23,14 @@ a {
 
 .button-menu{
   display: block;
+  padding: 16px;
 }
 
+.menu {
+  position: absolute;
+  right: 0;
+  padding: 0px 32px;
+}
 
 @media screen and (min-width: 650px) {
   .button-menu{

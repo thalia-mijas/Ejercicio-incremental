@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tooltip',
@@ -11,8 +12,13 @@ import { Component } from '@angular/core';
 export class TooltipComponent {
   mostrarMenu = false;
 
+  constructor(private router: Router) {}
+
   openMenu() {
-    console.log('open menu');
     this.mostrarMenu = !this.mostrarMenu;
+  }
+
+  goHome() {
+    this.router.navigate(['']);
   }
 }

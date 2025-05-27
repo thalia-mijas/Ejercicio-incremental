@@ -1,0 +1,24 @@
+<div class="form-container">
+  <form [formGroup]="register" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="nombres">Nombres: </label>
+      <input id="nombres" type="text" formControlName="nombres" />
+    </div>
+    <div>
+      <label for="apellidos">Apellidos: </label>
+      <input id="apellidos" type="text" formControlName="apellidos" />
+    </div>
+    <div>
+      <label for="email">Email: </label>
+      <input id="email" type="email" formControlName="email" />
+    </div>
+    <div>
+      <label for="password">Contraseña: </label>
+      <input id="password" type="text" formControlName="password" />
+    </div>
+    <div class="button-container">
+      <button type="submit" [disabled]="register.invalid">Continuar</button>
+    </div>
+  </form>
+</div>
+
