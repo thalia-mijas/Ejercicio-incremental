@@ -1,0 +1,15 @@
+.footer {
+  align-self: flex-end;
+}
+
+div {
+  width: 100%;
+  text-align: center;
+}
+
+@media screen and (min-width: 650px) {
+  .footer{
+    display: flex;
+    justify-content: space-between;
+  }
+}

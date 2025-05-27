@@ -1,0 +1,34 @@
+.tooltip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 16px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+}
+
+.button-login {
+  display: none;
+}
+
+.button-menu{
+  display: block;
+}
+
+
+@media screen and (min-width: 650px) {
+  .button-menu{
+    display: none;
+  }
+  .button-login {
+    display: block;
+  }
+}
