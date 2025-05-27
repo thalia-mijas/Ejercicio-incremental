@@ -36,7 +36,12 @@ a {
   .button-menu{
     display: none;
   }
+  .buttons-container {
+    display: flex;
+    gap: 8px;
+  }
   .button-login {
     display: block;
   }
+  
 }
