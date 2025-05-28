@@ -1,11 +1,5 @@
 main {
   height: 100vh;
   display: grid;
-  grid-template-rows: 15% 1% auto 15%;
-}
-
-@media screen and (min-width: 650px) {
-  main {
-    grid-template-rows: 15% 1% 68% 15%;
-  }
+  grid-template-rows: 10% 1% auto 15%;
 }

@@ -2,7 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
+  padding: 8px 16px;
+}
+
+ul {
+  list-style: none;
 }
 
 a {
@@ -12,12 +16,12 @@ a {
 }
 
 .logo {
-  width: 60px;
-  height: 60px;
+  width: 45px;
+  height: 45px;
   cursor: pointer;
 }
 
-.button-login {
+.buttons-container {
   display: none;
 }
 
