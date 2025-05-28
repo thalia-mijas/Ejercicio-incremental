@@ -1,1 +1,40 @@
-<p>basket works!</p>
+<div class="list">
+  <div *ngFor="let product of products" class="card-list">
+    <hr>
+    <a [href]="product.id"  class="product-card">
+      <img [src]="product.image" [alt]="product.title" style="width: 200px;">
+    </a>
+    <p>{{ product.title }}</p>
+    <p><strong>Precio unitario: </strong>{{ product.price | currency }}</p>
+    <p><strong>Cantidad: </strong>{{ product.quantity }}</p>
+  </div>
+  <hr>
+  <h3>Total: {{ totalPrice | currency }}</h3>
+</div>
+<div>
+  <form [formGroup]="shipment" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="nombres">Nombres: </label>
+      <input id="nombres" type="text" formControlName="nombres" />
+    </div>
+    <div>
+      <label for="apellidos">Apellidos: </label>
+      <input id="apellidos" type="text" formControlName="apellidos" />
+    </div>
+    <div>
+      <label for="direccion">Dirección: </label>
+      <input id="direccion" type="text" formControlName="direccion" />
+    </div>
+    <div>
+      <label for="cp">Código postal: </label>
+      <input id="cp" type="number" formControlName="cp" />
+    </div>
+    <div>
+      <label for="telefono">Teléfono: </label>
+      <input id="telefono" type="tel" formControlName="telefono" />
+    </div>
+    <div class="button-container">
+      <button type="submit" [disabled]="shipment.invalid">Aceptar</button>
+    </div>
+  </form>
+</div>
