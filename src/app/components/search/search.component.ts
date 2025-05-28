@@ -13,6 +13,5 @@ export class SearchComponent {
   onSearch(event: Event) {
     const query = (event.target as HTMLInputElement).value;
     this.searchEvent.emit(query);
-    console.log(this.searchEvent);
   }
 }

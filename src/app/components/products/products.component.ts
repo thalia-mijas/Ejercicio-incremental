@@ -1,5 +1,5 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { FakeStoreService } from '../../services/fake-store.service';
 
 interface Product {
@@ -18,12 +18,12 @@ interface Product {
 })
 export class ProductsComponent {
   products: Product[] = [];
+  allProducts: Product[] = [];
+  @Input() searchQuery = '';
 
-  constructor(private apiConnection: FakeStoreService) {
-    this.loadProducts();
-  }
+  constructor(private apiConnection: FakeStoreService) {}
 
-  loadProducts() {
+  ngOnInit() {
     this.apiConnection.getProducts().subscribe({
       next: (data) => {
         this.products = data.map((item: any) => ({
@@ -32,8 +32,25 @@ export class ProductsComponent {
           image: item.image,
           price: item.price,
         }));
+        this.allProducts = [...this.products];
       },
       error: (error) => console.error(error),
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['searchQuery']) {
+      this.filterProducts();
+    }
+  }
+
+  filterProducts() {
+    if (this.searchQuery === '') {
+      this.products = [...this.allProducts];
+    } else {
+      this.products = this.allProducts.filter((product) =>
+        product.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    }
   }
 }

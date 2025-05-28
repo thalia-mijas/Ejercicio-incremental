@@ -1,5 +1,5 @@
 <div class="home-container">
   <h1>Bienvenido a Baúl Digital</h1>
-  <app-search></app-search>
-  <app-products></app-products>
+  <app-search (searchEvent)="onSearch($event)"></app-search>
+  <app-products [searchQuery]="searchQuery"></app-products>
 </div>

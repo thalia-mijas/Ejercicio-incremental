@@ -9,4 +9,10 @@ import { SearchComponent } from '../search/search.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {}
+export class HomeComponent {
+  searchQuery = '';
+
+  onSearch(query: string) {
+    this.searchQuery = query;
+  }
+}
