@@ -1,13 +1,7 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, Input, SimpleChanges } from '@angular/core';
+import { Product } from '../../models/product.model';
 import { FakeStoreService } from '../../services/fake-store.service';
-
-interface Product {
-  id: number;
-  title: string;
-  image: string;
-  price: string;
-}
 
 @Component({
   selector: 'app-products',

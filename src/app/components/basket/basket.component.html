@@ -1,5 +1,5 @@
 <div class="list">
-  <div *ngFor="let product of products" class="card-list">
+  <div *ngFor="let product of products | async" class="card-list">
     <hr>
     <a [href]="product.id"  class="product-card">
       <img [src]="product.image" [alt]="product.title" style="width: 200px;">
@@ -7,6 +7,8 @@
     <p>{{ product.title }}</p>
     <p><strong>Precio unitario: </strong>{{ product.price | currency }}</p>
     <p><strong>Cantidad: </strong>{{ product.quantity }}</p>
+    <button (click)="addProduct(product, 1)">+</button>
+    <button (click)="delProduct(product)">-</button>
   </div>
   <hr>
   <h3>Total: {{ totalPrice | currency }}</h3>

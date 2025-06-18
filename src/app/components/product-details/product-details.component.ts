@@ -2,13 +2,11 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { BagProduct } from '../../models/bag-product.model';
+import { Product } from '../../models/product.model';
 import { FakeStoreService } from '../../services/fake-store.service';
-
-interface ProductDetail {
-  title: string;
-  image: string;
-  price: string;
-}
+import { addProduct } from '../../store/bag-products/bag-products.action';
 
 @Component({
   selector: 'app-product-details',
@@ -18,7 +16,7 @@ interface ProductDetail {
   styleUrl: './product-details.component.css',
 })
 export class ProductDetailsComponent {
-  product: ProductDetail | null = null;
+  product: Partial<Product> = {};
   productId: string = '';
 
   quantity: number = 1;
@@ -26,13 +24,15 @@ export class ProductDetailsComponent {
 
   constructor(
     private mapRoute: ActivatedRoute,
-    private apiConnection: FakeStoreService
+    private apiConnection: FakeStoreService,
+    private store: Store<{ product: BagProduct }>
   ) {
     this.mapRoute.paramMap.subscribe((params) => {
       this.productId = params.get('id')!;
       this.apiConnection.getProduct(this.productId).subscribe({
         next: (data) => {
           this.product = {
+            id: data.id,
             title: data.title,
             image: data.image,
             price: data.price,
@@ -41,5 +41,20 @@ export class ProductDetailsComponent {
         error: (error) => console.error(error),
       });
     });
+  }
+
+  addProduct(product: Partial<BagProduct>, quantity: number) {
+    if (!product || product.id === undefined || quantity === undefined) return;
+
+    const newProduct: BagProduct = {
+      id: product.id!,
+      title: product.title!,
+      image: product.image!,
+      price: product.price!,
+      quantity,
+    };
+    console.log(newProduct);
+    this.store.dispatch(addProduct(newProduct));
+    alert('Articulo agregado exitosamente');
   }
 }
