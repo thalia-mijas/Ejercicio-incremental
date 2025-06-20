@@ -5,12 +5,13 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 import { routes } from './app.routes';
 import { bagProductsReducer } from './store/bag-products/bag-products.reducer';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withFetch()),
-    provideStore({ products: bagProductsReducer }),
+    provideStore({ products: bagProductsReducer }), provideAnimationsAsync(),
   ],
 };

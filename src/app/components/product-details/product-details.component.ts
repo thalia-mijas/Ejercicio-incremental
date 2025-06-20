@@ -19,7 +19,7 @@ export class ProductDetailsComponent {
   product: Partial<Product> = {};
   productId: string = '';
 
-  quantity: number = 1;
+  selQuantity: number = 1;
   numbers: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
 
   constructor(
@@ -51,10 +51,10 @@ export class ProductDetailsComponent {
       title: product.title!,
       image: product.image!,
       price: product.price!,
-      quantity,
+      quantity: quantity!,
     };
     console.log(newProduct);
     this.store.dispatch(addProduct(newProduct));
-    alert('Articulo agregado exitosamente');
+    alert(`Articulo ${product.title} agregado exitosamente`);
   }
 }

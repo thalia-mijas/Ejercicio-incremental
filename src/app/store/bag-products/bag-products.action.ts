@@ -6,7 +6,7 @@ export const addProduct = createAction(
   (product: BagProduct) => ({ product })
 );
 
-export const delProduct = createAction(
-  '[Bag Component] Del Product',
-  (product: BagProduct) => ({ product })
-);
+// export const delProduct = createAction(
+//   '[Bag Component] Del Product',
+//   (product: BagProduct) => ({ product })
+// );

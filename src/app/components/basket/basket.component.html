@@ -7,36 +7,119 @@
     <p>{{ product.title }}</p>
     <p><strong>Precio unitario: </strong>{{ product.price | currency }}</p>
     <p><strong>Cantidad: </strong>{{ product.quantity }}</p>
-    <button (click)="addProduct(product, 1)">+</button>
-    <button (click)="delProduct(product)">-</button>
+    <!-- <button (click)="addProduct(product, 1)">+</button>
+    <button (click)="delProduct(product)">-</button> -->
   </div>
   <hr>
   <h3>Total: {{ totalPrice | currency }}</h3>
 </div>
 <div>
-  <form [formGroup]="shipment" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="nombres">Nombres: </label>
-      <input id="nombres" type="text" formControlName="nombres" />
-    </div>
-    <div>
-      <label for="apellidos">Apellidos: </label>
-      <input id="apellidos" type="text" formControlName="apellidos" />
-    </div>
-    <div>
-      <label for="direccion">Dirección: </label>
-      <input id="direccion" type="text" formControlName="direccion" />
-    </div>
-    <div>
-      <label for="cp">Código postal: </label>
-      <input id="cp" type="number" formControlName="cp" />
-    </div>
-    <div>
-      <label for="telefono">Teléfono: </label>
-      <input id="telefono" type="tel" formControlName="telefono" />
-    </div>
-    <div class="button-container">
-      <button type="submit" [disabled]="shipment.invalid">Aceptar</button>
-    </div>
-  </form>
+  <mat-stepper #stepper>
+    <mat-step [stepControl]="shipment" errorMessage="Datos de envío son obligatorios.">
+      <form [formGroup]="shipment" (ngSubmit)="onSubmitShipment()">
+        <ng-template matStepLabel>Envío</ng-template>
+        <mat-form-field>
+          <mat-label>Nombres: </mat-label>
+          <input matInput id="nombres" type="text" formControlName="nombres" required/>
+          <mat-error *ngIf="shipment.get('nombres')?.hasError('required')">
+            Los nombres son obligatorios
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Apellidos: </mat-label>
+          <input matInput id="apellidos" type="text" formControlName="apellidos" required/>
+          <mat-error *ngIf="shipment.get('apellidos')?.hasError('required')">
+            Los apellidos son obligatorios
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Dirección: </mat-label>
+          <input matInput id="direccion" type="text" formControlName="direccion" required/>
+          <mat-error *ngIf="shipment.get('direccion')?.hasError('required')">
+            La dirección es obligatoria
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Código postal: </mat-label>
+          <input matInput id="cp" type="text" formControlName="cp" required/>
+          <mat-error *ngIf="shipment.get('cp')?.hasError('required') || shipment.get('cp')?.hasError('minlength') || shipment.get('cp')?.hasError('maxlength')">
+            El código postal es obligatorio, debe tener al menos 3 caracteres y máximo 10 caracteres
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Teléfono: </mat-label>
+          <input matInput id="telefono" type="tel" formControlName="telefono" required/>
+          <mat-error *ngIf="shipment.get('telefono')?.hasError('required')">
+            El teléfono es obligatorio
+          </mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext [disabled]="shipment.invalid" type="submit">
+            Siguiente
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="payment" errorMessage="Información de pago es obligatoria.">
+      <form [formGroup]="payment"  (ngSubmit)="onSubmitPayment()">
+        <ng-template matStepLabel>Pago</ng-template>
+        <mat-form-field>
+          <mat-label>Numero de tarjeta: </mat-label>
+          <input matInput id="numero" type="text" formControlName="numero" required/>
+          <mat-error *ngIf="payment.get('numero')?.hasError('required') || payment.get('numero')?.hasError('minlength') || payment.get('numero')?.hasError('maxlength')">
+            El número de tarjeta es obligatorio y debe tener 16 caracteres
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Fecha de caducidad: </mat-label>
+          <input matInput id="fecha" type="date" formControlName="fecha" required/>
+          <mat-error *ngIf="payment.get('fecha')?.hasError('required')">
+            La fecha de caducidad es obligatoria
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>CVC: </mat-label>
+          <input matInput id="codigo" type="text" formControlName="cvc" required/>
+          <mat-error *ngIf="payment.get('cvc')?.hasError('required') || payment.get('cvc')?.hasError('minlength') || payment.get('cvc')?.hasError('maxlength')">
+            El código cvc es obligatorio y debe tener 3 caracteres
+          </mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Atrás</button>
+          <button mat-button matStepperNext [disabled]="payment.invalid" type="submit">Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Final</ng-template>
+      <p>Una vez completada la información procede a realizar el pago.</p>
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button (click)="stepperEnd()">Procesar pago</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
 </div>
+
+<!-- <form [formGroup]="shipment" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Nombres: </mat-label>
+      <input matInput id="nombres" type="text" formControlName="nombres" required/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Apellidos: </mat-label>
+      <input matInput id="apellidos" type="text" formControlName="apellidos" required/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Dirección: </mat-label>
+      <input matInput id="direccion" type="text" formControlName="direccion" required/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Código postal: </mat-label>
+      <input matInput id="cp" type="text" formControlName="cp" required/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Teléfono: </mat-label>
+      <input matInput id="telefono" type="tel" formControlName="telefono" required/>
+    </mat-form-field>
+  </form> -->

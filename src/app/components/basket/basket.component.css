@@ -13,6 +13,11 @@ h3 {
   text-align: center;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+}
+
 @media screen and (min-width: 650px) {
   .card-list {
     display: grid;
