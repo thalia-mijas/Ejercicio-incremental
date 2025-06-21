@@ -1,26 +1,26 @@
 <h2 mat-dialog-title>Algo salio mal</h2>
 <mat-dialog-content>
   <p>Por favor revisar datos de pago</p>
-  <form [formGroup]="updatePayment">
+  <form [formGroup]="payment">
     <ng-template matStepLabel>Pago</ng-template>
     <mat-form-field>
       <mat-label>Numero de tarjeta: </mat-label>
       <input matInput id="numero" type="text" formControlName="numero" required/>
-      <mat-error *ngIf="updatePayment.get('numero')?.hasError('required') || updatePayment.get('numero')?.hasError('minlength') || updatePayment.get('numero')?.hasError('maxlength')">
+      <mat-error *ngIf="payment.get('numero')?.hasError('required') || payment.get('numero')?.hasError('minlength') || payment.get('numero')?.hasError('maxlength')">
         El número de tarjeta es obligatorio y debe tener 16 caracteres
       </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Fecha de caducidad: </mat-label>
       <input matInput id="fecha" type="date" formControlName="fecha" required/>
-      <mat-error *ngIf="updatePayment.get('fecha')?.hasError('required')">
+      <mat-error *ngIf="payment.get('fecha')?.hasError('required')">
         La fecha de caducidad es obligatoria
       </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>CVC: </mat-label>
       <input matInput id="codigo" type="text" formControlName="cvc" required/>
-      <mat-error *ngIf="updatePayment.get('cvc')?.hasError('required') || updatePayment.get('cvc')?.hasError('minlength') || updatePayment.get('cvc')?.hasError('maxlength')">
+      <mat-error *ngIf="payment.get('cvc')?.hasError('required') || payment.get('cvc')?.hasError('minlength') || payment.get('cvc')?.hasError('maxlength')">
         El código cvc es obligatorio y debe tener 3 caracteres
       </mat-error>
     </mat-form-field>
@@ -28,5 +28,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button [mat-dialog-close]="savePayment()" [disabled]="updatePayment.invalid" cdkFocusInitial>Actualizar</button>
+  <button mat-button (click)="savePayment()" [disabled]="payment.invalid" cdkFocusInitial>Actualizar</button>
 </mat-dialog-actions>

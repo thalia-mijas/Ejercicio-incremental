@@ -39,13 +39,13 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class DialogFailedComponent {
   readonly data = inject(MAT_DIALOG_DATA);
-  updatePayment: FormGroup;
+  payment: FormGroup;
 
   constructor(
-    private updatePaymentBuilder: FormBuilder,
+    private paymentBuilder: FormBuilder,
     private dialogRef: MatDialogRef<DialogFailedComponent>
   ) {
-    this.updatePayment = this.updatePaymentBuilder.group({
+    this.payment = this.paymentBuilder.group({
       numero: [
         this.data.numero,
         [
@@ -64,12 +64,14 @@ export class DialogFailedComponent {
 
   onNoClick() {
     console.log('Cancelar');
+    this.dialogRef.close('No actualizar');
   }
 
   savePayment() {
-    // if (this.updatePayment.valid) {
-    //   this.dialogRef.close(this.updatePayment.value);
-    console.log('Datos válidos:', this.updatePayment.value);
+    // if (this.payment.valid) {
+    //   this.dialogRef.close(this.payment.value);
+    console.log('Datos válidos:', this.payment.value);
+    this.dialogRef.close({ state: 'actualizar', data: this.payment.value });
     // }
   }
 }
