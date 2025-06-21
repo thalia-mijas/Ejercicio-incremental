@@ -63,14 +63,14 @@ export class DialogFailedComponent {
   }
 
   onNoClick() {
-    console.log('Cancelar');
+    // console.log('Cancelar');
     this.dialogRef.close('No actualizar');
   }
 
   savePayment() {
     // if (this.payment.valid) {
     //   this.dialogRef.close(this.payment.value);
-    console.log('Datos válidos:', this.payment.value);
+    // console.log('Datos válidos:', this.payment.value);
     this.dialogRef.close({ state: 'actualizar', data: this.payment.value });
     // }
   }

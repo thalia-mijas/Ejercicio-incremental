@@ -54,7 +54,7 @@ export class BasketComponent {
   payment: FormGroup;
   totalPrice: number = 0;
   paymentData: Partial<Card> = {};
-  statePayment: boolean = true;
+  statePayment: boolean = false;
 
   constructor(
     private shipmentBuilder: FormBuilder,
@@ -115,21 +115,24 @@ export class BasketComponent {
     console.log(this.paymentData);
   }
 
+  verifyPayment() {
+    if (this.paymentData.numero === '4999999999999999') {
+      this.statePayment = true;
+    }
+  }
+
   openDialogSuccessful(): void {
-    console.log('Proceso exitoso');
     this.dialog.open(DialogSuccessfulComponent);
+    this.shipment.reset();
+    this.payment.reset();
   }
 
   openDialogFailed(): void {
-    console.log('Pago fallido');
-    console.log('data payment: ', this.payment.value);
-
     const dialogRef = this.dialog.open(DialogFailedComponent, {
       data: this.paymentData,
     });
 
     dialogRef.afterClosed().subscribe((resultado) => {
-      console.log('Resultado after close: ', resultado);
       if (resultado.state === 'actualizar') {
         this.paymentData = resultado.data;
         this.stepperEnd();
@@ -137,16 +140,19 @@ export class BasketComponent {
     });
   }
 
-  stepperEnd() {
+  submitFromForm() {
     this.onSubmitShipment();
     this.onSubmitPayment();
-    this.shipment.reset();
-    this.payment.reset();
+    this.stepperEnd();
+  }
+
+  stepperEnd() {
+    this.verifyPayment();
 
     const dialogRef = this.dialog.open(DialogProcessingComponent);
 
     setTimeout(() => {
-      dialogRef.close(); // Cierra solo ese diálogo
+      dialogRef.close();
       if (this.statePayment) {
         this.openDialogSuccessful();
       } else {

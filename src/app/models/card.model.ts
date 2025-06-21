@@ -1,5 +1,5 @@
 export interface Card {
-  number: number;
-  date: string;
+  numero: string;
+  fecha: string;
   cvc: number;
 }
