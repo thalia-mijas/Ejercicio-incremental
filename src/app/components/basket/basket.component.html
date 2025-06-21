@@ -95,7 +95,7 @@
       <p>Una vez completada la información procede a realizar el pago.</p>
       <div>
         <button mat-button matStepperPrevious>Atrás</button>
-        <button mat-button (click)="stepperEnd()">Procesar pago</button>
+        <button mat-button (click)="stepperEnd()" [disabled]="payment.invalid || shipment.invalid">Procesar pago</button>
       </div>
     </mat-step>
   </mat-stepper>

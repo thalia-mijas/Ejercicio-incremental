@@ -13,9 +13,14 @@ import { ProductDetailsComponent } from '../product-details/product-details.comp
 // import { mockProducts } from '../../mocks/cart-mock';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
+import { Card } from '../../models/card.model';
+import { DialogFailedComponent } from '../dialog-failed/dialog-failed.component';
+import { DialogProcessingComponent } from '../dialog-processing/dialog-processing.component';
+import { DialogSuccessfulComponent } from '../dialog-successful/dialog-successful.component';
 
 @Component({
   selector: 'app-basket',
@@ -35,6 +40,9 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    DialogProcessingComponent,
+    DialogSuccessfulComponent,
+    DialogFailedComponent,
   ],
   templateUrl: './basket.component.html',
   styleUrl: './basket.component.css',
@@ -45,11 +53,13 @@ export class BasketComponent {
   shipment: FormGroup;
   payment: FormGroup;
   totalPrice: number = 0;
+  paymentData: Partial<Card> = {};
 
   constructor(
     private shipmentBuilder: FormBuilder,
     private paymentBuilder: FormBuilder,
-    private store: Store<{ products: BagProduct[] }>
+    private store: Store<{ products: BagProduct[] }>,
+    private dialog: MatDialog
   ) {
     this.products = this.store.select('products');
     this.shipment = this.shipmentBuilder.group({
@@ -98,13 +108,33 @@ export class BasketComponent {
   }
 
   onSubmitPayment() {
-    const paymentData = this.payment.value;
-    console.log(paymentData);
+    this.paymentData = this.payment.value;
+    console.log(this.paymentData);
+  }
+
+  openDialogSuccessful(): void {
+    console.log('Proceso exitoso');
+    this.dialog.open(DialogSuccessfulComponent);
+  }
+
+  openDialogFailed(): void {
+    console.log('Pago fallido');
+    console.log('data payment: ', this.payment.value);
+    this.dialog.open(DialogFailedComponent, { data: this.paymentData });
   }
 
   stepperEnd() {
+    this.onSubmitShipment();
+    this.onSubmitPayment();
     this.shipment.reset();
     this.payment.reset();
+
+    const dialogRef = this.dialog.open(DialogProcessingComponent);
+
+    setTimeout(() => {
+      dialogRef.close(); // Cierra solo ese diálogo
+      this.openDialogFailed(); // Abre el siguiente
+    }, 3000);
   }
 
   // addProduct(product: Partial<BagProduct>, quantity: number) {
