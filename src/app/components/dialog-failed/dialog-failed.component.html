@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Algo salio mal</h2>
+<h2 mat-dialog-title>Algo salio mal!</h2>
 <mat-dialog-content>
   <p>Por favor revisar datos de pago</p>
   <form [formGroup]="payment">
@@ -11,12 +11,18 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Fecha de caducidad: </mat-label>
-      <input matInput id="fecha" type="date" formControlName="fecha" required/>
-      <mat-error *ngIf="payment.get('fecha')?.hasError('required')">
-        La fecha de caducidad es obligatoria
-      </mat-error>
-    </mat-form-field>
+          <mat-label>Fecha de caducidad: </mat-label>
+          <input matInput [matDatepicker]="dp" formControlName="fecha"  min="{{minDate}}">
+          <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker #dp
+                          startView="multi-year"
+                          (monthSelected)="setMonthAndYear($event, dp)"
+                          panelClass="example-month-picker">
+          </mat-datepicker>
+          <mat-error *ngIf="payment.get('fecha')?.hasError('required') || payment.get('fecha')?.hasError('fechaMenorMinima')">
+            La fecha de caducidad de la tarjeta es obligatoria y debe ser igual o posterior a {{ minDate }}
+          </mat-error>
+        </mat-form-field>
     <mat-form-field>
       <mat-label>CVC: </mat-label>
       <input matInput id="codigo" type="text" formControlName="cvc" required/>

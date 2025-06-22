@@ -72,9 +72,15 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Fecha de caducidad: </mat-label>
-          <input matInput id="fecha" type="date" formControlName="fecha" pattern="\d{2}-\d{2}-\d{0}" required/>
-          <mat-error *ngIf="payment.get('fecha')?.hasError('required')">
-            La fecha de caducidad es obligatoria
+          <input matInput [matDatepicker]="dp" formControlName="fecha" min="{{minDate}}">
+          <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker #dp
+                          startView="multi-year"
+                          (monthSelected)="setMonthAndYear($event, dp)"
+                          panelClass="example-month-picker">
+          </mat-datepicker>
+          <mat-error *ngIf="payment.get('fecha')?.hasError('required') || payment.get('fecha')?.hasError('fechaMenorMinima')">
+            La fecha de caducidad de la tarjeta es obligatoria y debe ser igual o posterior a {{ minDate }}
           </mat-error>
         </mat-form-field>
         <mat-form-field>

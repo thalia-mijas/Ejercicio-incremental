@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,9 +20,32 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+// tslint:disable-next-line:no-duplicate-imports
+import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
+import {
+  MatDatepicker,
+  MatDatepickerModule,
+} from '@angular/material/datepicker';
+import * as _moment from 'moment';
+import { default as _rollupMoment, Moment } from 'moment';
+
+const moment = _rollupMoment || _moment;
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/YY',
+  },
+  display: {
+    dateInput: 'MM/YY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-dialog-failed',
+  providers: [provideMomentDateAdapter(MY_FORMATS)],
   standalone: true,
   imports: [
     CommonModule,
@@ -33,6 +58,7 @@ import { MatInputModule } from '@angular/material/input';
     MatDialogActions,
     MatDialogClose,
     ReactiveFormsModule,
+    MatDatepickerModule,
   ],
   templateUrl: './dialog-failed.component.html',
   styleUrl: './dialog-failed.component.css',
@@ -40,6 +66,8 @@ import { MatInputModule } from '@angular/material/input';
 export class DialogFailedComponent {
   readonly data = inject(MAT_DIALOG_DATA);
   payment: FormGroup;
+  nuevaFecha = moment();
+  minDate = this.nuevaFecha.add(1, 'month').format('YYYY-MM-DD');
 
   constructor(
     private paymentBuilder: FormBuilder,
@@ -54,7 +82,10 @@ export class DialogFailedComponent {
           Validators.maxLength(16),
         ],
       ],
-      fecha: [this.data.fecha, [Validators.required]],
+      fecha: [
+        this.data.fecha,
+        [Validators.required, this.fechaMinimaValidator(this.minDate)],
+      ],
       cvc: [
         this.data.cvc,
         [Validators.required, Validators.minLength(3), Validators.maxLength(3)],
@@ -62,16 +93,36 @@ export class DialogFailedComponent {
     });
   }
 
+  setMonthAndYear(
+    normalizedMonthAndYear: Moment,
+    datepicker: MatDatepicker<Moment>
+  ) {
+    const ctrl = this.payment.get('fecha');
+    if (ctrl) {
+      this.nuevaFecha.month(normalizedMonthAndYear.month());
+      this.nuevaFecha.year(normalizedMonthAndYear.year());
+      ctrl.setValue(this.nuevaFecha);
+      datepicker.close();
+    }
+  }
+
+  fechaMinimaValidator(minDate: string) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valor = control.value;
+      if (!valor) return null;
+
+      const seleccionada = moment(valor);
+      const minima = moment(minDate);
+
+      return seleccionada.isBefore(minima) ? { fechaMenorMinima: true } : null;
+    };
+  }
+
   onNoClick() {
-    // console.log('Cancelar');
     this.dialogRef.close('No actualizar');
   }
 
   savePayment() {
-    // if (this.payment.valid) {
-    //   this.dialogRef.close(this.payment.value);
-    // console.log('Datos válidos:', this.payment.value);
     this.dialogRef.close({ state: 'actualizar', data: this.payment.value });
-    // }
   }
 }
