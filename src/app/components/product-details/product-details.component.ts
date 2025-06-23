@@ -1,6 +1,11 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BagProduct } from '../../models/bag-product.model';
@@ -11,7 +16,16 @@ import { addProduct } from '../../store/bag-products/bag-products.action';
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CurrencyPipe, CommonModule, FormsModule],
+  imports: [
+    CurrencyPipe,
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
 })

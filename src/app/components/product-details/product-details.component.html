@@ -1,18 +1,16 @@
 <div class="product-detail">
   <img [src]="product.image" [alt]="product.title" style="width: 200px;">
   <div class="detail">
-    <h2>{{ product.title }}</h2>
+    <h3>{{ product.title }}</h3>
     <p>{{ product.price | currency }}</p>
-    <div class="quantity-controls">
-      <label for="quantity">Cantidad: </label>
-      <select id="quantity" [(ngModel)]="selQuantity">
-        <option *ngFor="let num of numbers" [value]="num">{{ num }}</option>
-      </select>
-    </div>
-    <button (click)="addProduct(product, selQuantity)">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
-        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/>
-      </svg>
+    <mat-form-field class="quantity-controls">
+      <mat-label>Cantidad:</mat-label>
+      <mat-select id="quantity" [(ngModel)]="selQuantity">
+        <mat-option *ngFor="let num of numbers" [value]="num">{{ num }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-mini-fab (click)="addProduct(product, selQuantity)">
+      <mat-icon aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
     </button>
   </div>
 </div>

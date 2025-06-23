@@ -1,23 +1,36 @@
 <div class="form-container">
   <form [formGroup]="register" (ngSubmit)="onSubmit()">
+    <h2>Registro</h2>
+    <mat-form-field  subscriptSizing="dynamic">
+      <mat-label>Nombres: </mat-label>
+      <input  matInput id="nombres" type="text" formControlName="nombres" />
+      <!-- <mat-error *ngIf="register.get('nombres')?.hasError('required')">
+        El email es obligatorio y debe ser valido
+      </mat-error> -->
+    </mat-form-field>
+    <mat-form-field  subscriptSizing="dynamic">
+      <mat-label>Apellidos: </mat-label>
+      <input  matInput id="apellidos" type="text" formControlName="apellidos" />
+      <mat-error *ngIf="register.get('apellidos')?.hasError('required')">
+        El email es obligatorio y debe ser valido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field  subscriptSizing="dynamic">
+      <mat-label>Email: </mat-label>
+      <input  matInput id="email" type="email" formControlName="email" />
+      <mat-error *ngIf="register.get('email')?.hasError('required') || register.get('email')?.hasError('email')">
+        El email es obligatorio y debe ser valido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field  subscriptSizing="dynamic">
+      <mat-label>Contraseña: </mat-label>
+      <input  matInput id="password" type="text" formControlName="password" />
+      <mat-error *ngIf="register.get('password')?.hasError('required') || register.get('password')?.hasError('minlength')">
+        La contraseña es obligatoria y debe tener al menos 8 caracteres
+      </mat-error>
+    </mat-form-field>
     <div>
-      <label for="nombres">Nombres: </label>
-      <input id="nombres" type="text" formControlName="nombres" />
-    </div>
-    <div>
-      <label for="apellidos">Apellidos: </label>
-      <input id="apellidos" type="text" formControlName="apellidos" />
-    </div>
-    <div>
-      <label for="email">Email: </label>
-      <input id="email" type="email" formControlName="email" />
-    </div>
-    <div>
-      <label for="password">Contraseña: </label>
-      <input id="password" type="text" formControlName="password" />
-    </div>
-    <div class="button-container">
-      <button type="submit" [disabled]="register.invalid">Continuar</button>
+      <button  mat-flat-button  type="submit" [disabled]="register.invalid">Continuar</button>
     </div>
   </form>
 </div>

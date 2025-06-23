@@ -1,11 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tooltip',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatToolbarModule,
+  ],
   templateUrl: './tooltip.component.html',
   styleUrl: './tooltip.component.css',
 })
@@ -20,5 +30,13 @@ export class TooltipComponent {
 
   goHome() {
     this.router.navigate(['']);
+  }
+
+  goLogin() {
+    this.router.navigate(['login']);
+  }
+
+  goBasket() {
+    this.router.navigate(['basket']);
   }
 }

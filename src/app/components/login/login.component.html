@@ -1,16 +1,23 @@
 <div class="form-container">
   <form [formGroup]="login" (ngSubmit)="onSubmit()">
+    <h2>Inicio de sesión</h2>
+    <mat-form-field>
+      <mat-label>Email: </mat-label>
+      <input matInput id="email" type="email" formControlName="email" />
+      <mat-error *ngIf="login.get('email')?.hasError('required') || login.get('email')?.hasError('email')">
+        El email es obligatorio y debe ser valido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Contraseña: </mat-label>
+      <input matInput id="password" type="text" formControlName="password" />
+      <mat-error *ngIf="login.get('password')?.hasError('required') || login.get('password')?.hasError('minlength')">
+        La contraseña es obligatoria y debe tener al menos 8 caracteres
+      </mat-error>
+    </mat-form-field>
     <div>
-      <label for="email">Email: </label>
-      <input id="email" type="email" formControlName="email" />
+      <button mat-flat-button class="tonal-button" color="primary" type="submit" [disabled]="login.invalid">Continuar</button>
     </div>
-    <div>
-      <label for="password">Contraseña: </label>
-      <input id="password" type="text" formControlName="password" />
-    </div>
-    <div class="button-container">
-      <button type="submit" [disabled]="login.invalid">Continuar</button>
-    </div>
+    <a mat-button href="/register">¿No tienes cuenta? Regístrate</a>
   </form>
-  <a href="/register">¿No tienes cuenta? Regístrate</a>
 </div>

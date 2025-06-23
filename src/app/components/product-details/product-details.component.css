@@ -8,6 +8,12 @@
 
 .detail {
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.quantity-controls {
+  width: 130px;
 }
 
 @media screen and (min-width: 650px) {
