@@ -5,12 +5,13 @@
   padding: 16px;
 }
 
-.card-list hr {
-  width: 80%;
+h3, h4 {
+  text-align: center;
 }
 
 h3 {
-  text-align: center;
+  color: #ba005c;
+  text-decoration: underline;
 }
 
 form {
@@ -22,26 +23,25 @@ form {
   .card-list {
     display: grid;
     grid-template-columns: 40% auto;
-    grid-template-areas: "separator  separator"
+    grid-template-areas: 
     "img title"
     "img price"
     "img quantity";
-  }
-  hr {
-    grid-area: separator;
   }
   .card-list a {
     grid-area: img;
     justify-self: center;
     padding: 16px;
   }
-  .card-list p:nth-child(3) {
+  .card-list p:nth-child(2) {
     grid-area: title;
+    align-self: flex-end;
   }
-  .card-list p:nth-child(4) {
+  .card-list p:nth-child(3) {
     grid-area: price;
   }
-  .card-list p:nth-child(5) {
+  .card-list p:nth-child(4) {
     grid-area: quantity;
+    align-self: flex-start;
   }
 }

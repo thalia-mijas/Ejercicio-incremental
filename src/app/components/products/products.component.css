@@ -14,7 +14,7 @@
   width: calc(100% - 32px);
   border-radius: 25px;
   padding: 16px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 8px #edcad0;
   transition: transform 0.2s ease,
 }
 

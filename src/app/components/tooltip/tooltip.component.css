@@ -17,6 +17,9 @@
   margin: 8px 8px 8px 0;
 }
 
+mat-icon {
+  color: #ba005c;
+}
 
 @media screen and (min-width: 650px) {
   .button-menu{

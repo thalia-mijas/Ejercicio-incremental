@@ -1,13 +1,13 @@
 <mat-toolbar>
   <img class="logo" src="../baul.svg" alt="Logo baúl digital" (click)="goHome()">
   <span class="example-spacer"></span>
-  <button mat-mini-fab  class="button-menu-lap" (click)="goLogin()">
+  <button mat-icon-button class="button-menu-lap" (click)="goLogin()">
     <mat-icon aria-hidden="false" fontIcon="login"></mat-icon>
   </button>
-  <button mat-mini-fab class="button-menu-lap" (click)="goBasket()">
+  <button mat-icon-button class="button-menu-lap" (click)="goBasket()">
     <mat-icon aria-hidden="false" fontIcon="shopping_cart"></mat-icon>
   </button>
-  <button mat-mini-fab class="button-menu" [matMenuTriggerFor]="beforeMenu">
+  <button mat-icon-button class="button-menu" [matMenuTriggerFor]="beforeMenu">
     <mat-icon aria-hidden="false" fontIcon="dehaze"></mat-icon>
   </button>
   <mat-menu #beforeMenu="matMenu" xPosition="before">

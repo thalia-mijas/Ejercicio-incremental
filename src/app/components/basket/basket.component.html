@@ -1,19 +1,16 @@
 <div class="list">
   <div *ngFor="let product of products | async" class="card-list">
-    <hr>
     <a [href]="product.id"  class="product-card">
-      <img [src]="product.image" [alt]="product.title" style="width: 200px;">
+      <img [src]="product.image" [alt]="product.title" style="width: 100px;">
     </a>
     <p>{{ product.title }}</p>
     <p><strong>Precio unitario: </strong>{{ product.price | currency }}</p>
     <p><strong>Cantidad: </strong>{{ product.quantity }}</p>
-    <!-- <button (click)="addProduct(product, 1)">+</button>
-    <button (click)="delProduct(product)">-</button> -->
   </div>
-  <hr>
-  <h3>Total: {{ totalPrice | currency }}</h3>
+  <h4>Total: {{ totalPrice | currency }}</h4>
 </div>
 <div>
+  <h3>Finalizar compra</h3>
   <mat-stepper #stepper>
     <mat-step [stepControl]="shipment" errorMessage="Datos de envío son obligatorios.">
       <form [formGroup]="shipment" (ngSubmit)="onSubmitShipment()">
