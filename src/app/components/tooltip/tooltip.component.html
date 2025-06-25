@@ -1,5 +1,6 @@
 <mat-toolbar>
   <img class="logo" src="../baul.svg" alt="Logo baúl digital" (click)="goHome()">
+  <span class="title" *ngIf="!isHome">BAÚL DIGITAL</span>
   <span class="example-spacer"></span>
   <button mat-icon-button class="button-menu-lap" (click)="goLogin()">
     <mat-icon aria-hidden="false" fontIcon="login"></mat-icon>

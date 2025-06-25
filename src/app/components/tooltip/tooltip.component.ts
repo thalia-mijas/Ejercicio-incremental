@@ -39,4 +39,8 @@ export class TooltipComponent {
   goBasket() {
     this.router.navigate(['basket']);
   }
+
+  get isHome(): boolean {
+    return this.router.url === '/';
+  }
 }
