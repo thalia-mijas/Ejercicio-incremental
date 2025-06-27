@@ -9,7 +9,9 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-register',
@@ -26,27 +28,40 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   register: FormGroup;
-  users: string[] = this.getUsers();
+  users: User[] = this.getUsers();
 
-  constructor(private registerBuilder: FormBuilder, private router: Router) {
+  constructor(
+    private registerBuilder: FormBuilder,
+    private router: Router,
+    private _snackBar: MatSnackBar
+  ) {
     this.register = this.registerBuilder.group({
       nombres: ['', [Validators.required]],
       apellidos: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   onSubmit() {
     const userData = this.register.value;
+    if (this.users.some((user) => user.email === userData.email)) {
+      alert('El usuario ya está registrado con este correo electrónico');
+      return;
+    }
     this.users.push(userData);
-    sessionStorage.setItem('users', JSON.stringify(this.users));
+    localStorage.setItem('users', JSON.stringify(this.users));
+    this.openSnackBar(userData.email);
     this.register.reset();
     this.router.navigate(['']);
   }
 
   getUsers() {
-    const storedData = sessionStorage.getItem('users');
+    const storedData = localStorage.getItem('users');
     return storedData ? JSON.parse(storedData) : [];
+  }
+
+  openSnackBar(user: string) {
+    this._snackBar.open(`Usuario ${user} registrado exitosamente`, 'Cerrar');
   }
 }

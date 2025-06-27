@@ -4,15 +4,15 @@
     <mat-form-field  subscriptSizing="dynamic">
       <mat-label>Nombres: </mat-label>
       <input  matInput id="nombres" type="text" formControlName="nombres" />
-      <!-- <mat-error *ngIf="register.get('nombres')?.hasError('required')">
-        El email es obligatorio y debe ser valido
-      </mat-error> -->
+      <mat-error *ngIf="register.get('nombres')?.hasError('required')">
+        El nombre es obligatorio
+      </mat-error>
     </mat-form-field>
     <mat-form-field  subscriptSizing="dynamic">
       <mat-label>Apellidos: </mat-label>
       <input  matInput id="apellidos" type="text" formControlName="apellidos" />
       <mat-error *ngIf="register.get('apellidos')?.hasError('required')">
-        El email es obligatorio y debe ser valido
+        Los apellidos son obligatorios
       </mat-error>
     </mat-form-field>
     <mat-form-field  subscriptSizing="dynamic">
@@ -26,11 +26,11 @@
       <mat-label>Contraseña: </mat-label>
       <input  matInput id="password" type="text" formControlName="password" />
       <mat-error *ngIf="register.get('password')?.hasError('required') || register.get('password')?.hasError('minlength')">
-        La contraseña es obligatoria y debe tener al menos 8 caracteres
+        La contraseña es obligatoria y debe tener al menos 6 caracteres
       </mat-error>
     </mat-form-field>
     <div>
-      <button  mat-flat-button  type="submit" [disabled]="register.invalid">Registrar</button>
+      <button mat-flat-button type="submit" [disabled]="register.invalid">Registrar</button>
     </div>
   </form>
 </div>

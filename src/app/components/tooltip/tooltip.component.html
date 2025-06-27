@@ -3,18 +3,18 @@
   <span class="title" *ngIf="!isHome">BAÚL DIGITAL</span>
   <span class="example-spacer"></span>
   <button mat-icon-button class="button-menu-lap" (click)="goLogin()">
-    <mat-icon aria-hidden="false" fontIcon="login"></mat-icon>
+    <mat-icon aria-hidden="false" aria-label="Iniciar sesión" fontIcon="login"></mat-icon>
   </button>
   <button mat-icon-button class="button-menu-lap" (click)="goBasket()">
-    <mat-icon aria-hidden="false" fontIcon="shopping_cart"></mat-icon>
+    <mat-icon aria-hidden="false" aria-label="Carrito" fontIcon="shopping_cart"></mat-icon>
   </button>
   <button mat-icon-button class="button-menu" [matMenuTriggerFor]="beforeMenu">
-    <mat-icon aria-hidden="false" fontIcon="dehaze"></mat-icon>
+    <mat-icon aria-hidden="false" aria-label="Menu" fontIcon="dehaze"></mat-icon>
   </button>
   <mat-menu #beforeMenu="matMenu" xPosition="before">
     <button mat-menu-item (click)="goLogin()">
-    <mat-icon aria-hidden="false" fontIcon="login"></mat-icon>Iniciar sesión</button>
+    <mat-icon aria-hidden="false" aria-label="Iniciar sesión" fontIcon="login"></mat-icon>Iniciar sesión</button>
     <button mat-menu-item (click)="goBasket()">
-    <mat-icon aria-hidden="false" fontIcon="shopping_cart"></mat-icon>Carrito</button>
+    <mat-icon aria-hidden="false"  aria-label="Carrito" fontIcon="shopping_cart"></mat-icon>Carrito</button>
   </mat-menu>
 </mat-toolbar>

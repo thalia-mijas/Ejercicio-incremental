@@ -20,10 +20,24 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('ejercicio-incremental');
   });
 
-  it('should render title', () => {
+  it('should render main', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, ejercicio-incremental');
+    expect(compiled.querySelector('main')).toBeTruthy();
+  });
+
+  it('should render tooltip', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('app-tooltip')).toBeTruthy();
+  });
+
+  it('should render footer', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('app-footer')).toBeTruthy();
   });
 });

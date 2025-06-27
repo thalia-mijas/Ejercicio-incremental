@@ -9,7 +9,9 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -26,25 +28,57 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   login: FormGroup;
-  users: string[] = this.getUsers();
+  users: User[] = this.getUsers();
 
-  constructor(private loginBuilder: FormBuilder, private router: Router) {
+  constructor(
+    private loginBuilder: FormBuilder,
+    private router: Router,
+    private _snackBar: MatSnackBar
+  ) {
     this.login = this.loginBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   onSubmit() {
     const userData = this.login.value;
-    this.users.push(userData);
-    sessionStorage.setItem('usersLogin', JSON.stringify(this.users));
-    this.login.reset();
-    this.router.navigate(['']);
+    let indexUser = -1;
+    const usersRegistered = this.getUsersRegistered();
+    if (!usersRegistered.some((user: User) => user.email === userData.email)) {
+      this._snackBar.open('Usuario no existe,por favor registrese', 'Cerrar');
+    } else {
+      usersRegistered.forEach((user) => {
+        if (user.email === userData.email) {
+          indexUser = usersRegistered.indexOf(user);
+        }
+      });
+      if (
+        indexUser > 0 &&
+        usersRegistered[indexUser].password === userData.password
+      ) {
+        this.openSnackBar(usersRegistered[indexUser].nombres);
+        this.users.push(usersRegistered[indexUser]);
+        localStorage.setItem('usersLogin', JSON.stringify(this.users));
+        this.login.reset();
+        this.router.navigate(['']);
+      } else {
+        this._snackBar.open('Credenciales incorrectas', 'Cerrar');
+      }
+    }
   }
 
   getUsers() {
-    const storedData = sessionStorage.getItem('usersLogin');
+    const storedData = localStorage.getItem('usersLogin');
     return storedData ? JSON.parse(storedData) : [];
+  }
+
+  getUsersRegistered(): User[] {
+    const storedData = localStorage.getItem('users');
+    return storedData ? JSON.parse(storedData) : [];
+  }
+
+  openSnackBar(user: string) {
+    this._snackBar.open(`Bienvenid@ ${user}`, 'Cerrar');
   }
 }

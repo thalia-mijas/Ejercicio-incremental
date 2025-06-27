@@ -12,11 +12,11 @@
       <mat-label>Contraseña: </mat-label>
       <input matInput id="password" type="text" formControlName="password" />
       <mat-error *ngIf="login.get('password')?.hasError('required') || login.get('password')?.hasError('minlength')">
-        La contraseña es obligatoria y debe tener al menos 8 caracteres
+        La contraseña es obligatoria y debe tener al menos 6 caracteres
       </mat-error>
     </mat-form-field>
     <div>
-      <button mat-flat-button class="tonal-button" color="primary" type="submit" [disabled]="login.invalid">Continuar</button>
+      <button mat-flat-button class="tonal-button" color="primary" type="submit" [disabled]="login.invalid">Ingresar</button>
     </div>
     <a mat-button href="/register">¿No tienes cuenta? Regístrate</a>
   </form>

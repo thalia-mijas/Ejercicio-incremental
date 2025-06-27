@@ -1,11 +1,12 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BagProduct } from '../../models/bag-product.model';
@@ -29,7 +30,7 @@ import { addProduct } from '../../store/bag-products/bag-products.action';
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
 })
-export class ProductDetailsComponent {
+export class ProductDetailsComponent implements OnInit {
   product: Partial<Product> = {};
   productId: string = '';
 
@@ -39,8 +40,11 @@ export class ProductDetailsComponent {
   constructor(
     private mapRoute: ActivatedRoute,
     private apiConnection: FakeStoreService,
-    private store: Store<{ product: BagProduct }>
-  ) {
+    private store: Store<{ product: BagProduct }>,
+    private _snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit() {
     this.mapRoute.paramMap.subscribe((params) => {
       this.productId = params.get('id')!;
       this.apiConnection.getProduct(this.productId).subscribe({
@@ -69,6 +73,10 @@ export class ProductDetailsComponent {
     };
     console.log(newProduct);
     this.store.dispatch(addProduct(newProduct));
-    alert(`Articulo ${product.title} agregado exitosamente`);
+    this.openSnackBar(product.title!);
+  }
+
+  openSnackBar(article: string) {
+    this._snackBar.open(`Articulo ${article} agregado exitosamente`, 'Cerrar');
   }
 }
