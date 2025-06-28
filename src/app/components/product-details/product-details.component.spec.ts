@@ -62,12 +62,11 @@ describe('ProductDetailsComponent', () => {
 
   it('should dispatch addProduct action with selected quantity', () => {
     const snackBar = TestBed.inject(MatSnackBar);
-    const snackBarSpy = spyOn(snackBar, 'open').and.callThrough();
 
     component.addProduct(mockProductChosen, 1);
 
-    expect(snackBarSpy).toHaveBeenCalledWith(
-      'Artículo Pierced Owl Rose Gold Plated Stainless Steel Double agregado exitosamente',
+    expect(snackBar.open).toHaveBeenCalledWith(
+      'Articulo Pierced Owl Rose Gold Plated Stainless Steel Double agregado exitosamente',
       'Cerrar'
     );
   });

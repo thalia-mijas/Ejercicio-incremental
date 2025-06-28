@@ -187,7 +187,7 @@ export class BasketComponent {
     });
 
     dialogRef.afterClosed().subscribe((resultado) => {
-      if (resultado.state === 'actualizar') {
+      if (resultado?.state === 'actualizar') {
         this.paymentData = resultado.data;
         this.stepperEnd();
       }
@@ -214,22 +214,4 @@ export class BasketComponent {
       }
     }, 3000);
   }
-
-  // addProduct(product: Partial<BagProduct>, quantity: number) {
-  //   if (!product || product.id === undefined || quantity === undefined) return;
-
-  //   const newProduct: BagProduct = {
-  //     id: product.id!,
-  //     title: product.title!,
-  //     image: product.image!,
-  //     price: product.price!,
-  //     quantity,
-  //   };
-  //   this.store.dispatch(addProduct(newProduct));
-  // }
-
-  // delProduct(product: BagProduct) {
-  //   if (!product || product.id === undefined) return;
-  //   this.store.dispatch(addProduct(product));
-  // }
 }

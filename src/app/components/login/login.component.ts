@@ -46,15 +46,13 @@ export class LoginComponent {
     let indexUser = -1;
     const usersRegistered = this.getUsersRegistered();
     if (!usersRegistered.some((user: User) => user.email === userData.email)) {
-      this._snackBar.open('Usuario no existe,por favor registrese', 'Cerrar');
+      this._snackBar.open('Usuario no existe, por favor registrese', 'Cerrar');
     } else {
-      usersRegistered.forEach((user) => {
-        if (user.email === userData.email) {
-          indexUser = usersRegistered.indexOf(user);
-        }
-      });
+      const indexUser = usersRegistered.findIndex(
+        (user) => user.email === userData.email
+      );
       if (
-        indexUser > 0 &&
+        indexUser >= 0 &&
         usersRegistered[indexUser].password === userData.password
       ) {
         this.openSnackBar(usersRegistered[indexUser].nombres);
