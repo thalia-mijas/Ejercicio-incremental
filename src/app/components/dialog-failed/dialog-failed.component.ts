@@ -119,10 +119,10 @@ export class DialogFailedComponent {
   }
 
   onNoClick() {
-    this.dialogRef.close('No actualizar');
+    this.dialogRef.close();
   }
 
   savePayment() {
-    this.dialogRef.close({ state: 'actualizar', data: this.payment.value });
+    this.dialogRef.close({ data: this.payment.value });
   }
 }

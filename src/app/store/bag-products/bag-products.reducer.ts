@@ -22,8 +22,4 @@ export const bagProductsReducer = createReducer(
     localStorage.setItem('bagProducts', JSON.stringify(finalState));
     return finalState;
   })
-  // on(delProduct, (state, { product }) => {
-  //   const updated = state;
-  //   return updated;
-  // })
 );

@@ -187,10 +187,10 @@ export class BasketComponent {
     });
 
     dialogRef.afterClosed().subscribe((resultado) => {
-      if (resultado?.state === 'actualizar') {
+      if (resultado?.data) {
         this.paymentData = resultado.data;
-        this.stepperEnd();
       }
+      this.stepperEnd();
     });
   }
 
@@ -207,11 +207,14 @@ export class BasketComponent {
 
     setTimeout(() => {
       dialogRef.close();
+    }, 3000);
+
+    dialogRef.afterClosed().subscribe((result) => {
       if (this.statePayment) {
         this.openDialogSuccessful();
       } else {
         this.openDialogFailed();
       }
-    }, 3000);
+    });
   }
 }
